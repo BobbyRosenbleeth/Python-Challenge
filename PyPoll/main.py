@@ -20,7 +20,9 @@ with open(election_csv) as csv_file:
     VotePercentage = []
     Candidate_Votes = {}
     VoteCountList = []
-        
+    results = ""
+    combined_results = ""
+
     # Iterate through the rows in the CSV
     for row in csv_reader:
         Count +=1
@@ -53,27 +55,26 @@ print("-------------------------------")
 print("Total Votes: ", Count)
 print("-------------------------------")
 for i in range(0, len(Candidates_No_Dupes)):
-    print(f'{Candidate_Votes["Name"][i]}: {Candidate_Votes["Vote Percentage"][i]} ({Candidate_Votes["Vote Count"][i]})')
+    results = f'{Candidate_Votes["Name"][i]}: {Candidate_Votes["Vote Percentage"][i]} ({Candidate_Votes["Vote Count"][i]})'
+    combined_results += results + "\n"
+print(combined_results)
 print("-------------------------------")
 for i in range(0, len(Candidates_No_Dupes)):
     if VoteCountList[i] == max(VoteCountList):
-        print("Winner:", Candidates_No_Dupes[i])
+        winner = f'{"Winner:", Candidates_No_Dupes[i]}'
+        print(winner)
 print("-------------------------------")
 
 # Output to text file.
-four = []
+output_file = (f"Election Results\n"   
+    f"-------------------------------\n"
+    f"Total Votes: {Count}\n"
+    f"-------------------------------\n"
+    f"{combined_results}\n"
+    f"-------------------------------\n"
+    f"{winner}\n"
+    f"-------------------------------\n")
 
-one = "Election Results"
-two = "-------------------------------"
-three = "Total Votes: ", Count
-for i in range(0, len(Candidates_No_Dupes)):
-    four.append((Candidate_Votes["Name"][i], ":", Candidate_Votes["Vote Percentage"][i], "(", Candidate_Votes["Vote Count"][i],"')"))
-for i in range(0, len(Candidates_No_Dupes)):
-    if VoteCountList[i] == max(VoteCountList):
-        five = "Winner:", Candidates_No_Dupes[i]
-
-lines = [one, two, three, two, four, two, five, two] 
 with open("Output.txt", "w") as f:
-    for line in range(0, len(lines)):
-        f.write(str(lines[line]))
-        f.write("\n")
+    f.write(output_file)
+    f.write("\n")    
